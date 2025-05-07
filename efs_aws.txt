@@ -1,0 +1,178 @@
+AWS EFS
+
+Creating and maintaing file system is difficult hence this service is provided
+
+provides simple, serverless and and elastic file system
+lets you shared data without provisoining or managing storagge
+
+Compared to AWS EBS, AWS EFS saves the data in many Availability Zones.
+
+on prem ---- or ec2
+
+application running on multiple ec2 instance can access efs file sysetm ssame time
+
+EFS use currently network file system version 4 protocol
+
+after you create file system you can mount it on ec2. 
+
+no minimum fees and setup fees 
+
+efs grows and shrinks as per data
+
+
+
+when to use EFS
+
+
+Type of storage
+
+AWS EFS
+
+used for application which required shared file system access by multiple system
+
+application which access data through standard interface
+
+scalability and reliabliity of cloud without writtig any new code
+
+
+object storage  --- s3
+
+application that do not rquired file storage structure and requires only objet storage
+
+those type of application can use object storage
+
+Massivly scalable cost optimized solution
+
+block storage   --- ebs
+
+data is broken into blocks and each block has unique id
+
+example-:
+
+enterprise application
+containarize application
+big data analysys
+
+
+EFS / EBS 
+
+Benifits
+
+1000 of ec2 or on prem system can simultaneously access efs
+
+in EBS only single EC2 instance can access ebs
+
+
+1) Dyanmic Elasticity
+
+ -- auatomcatic scale up or down storage capacity 
+without distrubingt application
+=== start adding file
+
+
+2) fully manged by AWS
+ --- simple interface , complexity is remove
+
+
+3)cost effect
+
+---- pay for what you use
+
+4)security compliance
+
+---- securlty access files like IAM,VPC
+
+5) encrypt data while transmitting and data at rest
+
+
+Uses cases of EFS
+
+Machine learning and analytics --- easy of use , scale and performance
+
+web serving and content marketing --- provide durable high throughtpu managment
+
+application dev and testing ------ HA solution
+
+media and entermainaint ---- depends on shared storage. high througut and shared access
+
+
+Disadvatnage - EFS does not support windows
+
+Lab-:
+
+1)create security group --- one for instance
+
+only allow ssh
+
+2) now create another one -=== one for efs system
+
+incoming TCP allowed --- port 0 source  0.0.0.0
+
+
+3) Create file system
+
+give name
+
+sleect VPC
+
+Click on customize
+
+lifecyce managment if file not used for 30 days change storage class
+
+next
+
+network access under
+
+select ec2 security group for all 3 az ( EC2 sg)
+
+why we are creating in order for ec2 to access efs
+
+
+
+create ec2 instance
+
+login to instance. select security group
+
+execute command on terimnal "df -T -h"
+
+when you executed above command ec2 mounted on efs
+
+you can also mount same way other ec2 instance and other ec2 can view files
+
+
+=============================================================================================\\\\\
+
+How to connect to Database instance you created from ec2 instance
+
+
+create Ec2 instance
+
+select SG where incoming rule 3306 is allowed and remember endpoint ID of your database
+
+create database of engine Maria and give initial name to database
+
+on ec2 instance execute following command
+
+sudo su
+
+yum install mariadb-server
+
+systemctl enable mariadb
+
+system start mariadb
+
+
+you need username,password and RDS endpoint
+
+command to connect from ec2 to Database instance
+
+
+mysql -h <endpoint id> -P 3306 -u rdsuser -p  --- provide password
+ 
+
+you can connect from multiple EC2 instances to a single database instance (like an Amazon RDS instance) as 
+long as they are configured within the same VPC and the database security group allows connections from all
+ the EC2 instances' IP addresses; essentially, any number of EC2 instances can access the same database if 
+properly configured with security group rules
+
+
